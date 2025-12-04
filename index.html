@@ -10,12 +10,12 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="container" role="main" aria-label="X to Y calculator">
-    <h1>Compute <span class="mono">y</span> from <span class="mono">x</span></h1>
+  <main class="container" role="main" aria-label="Meters to MIL calculator">
+    <h1>Compute <span class="mono">MIL</span> from <span class="mono">Meters</span></h1>
     <p class="sub">Uses the linear fit: <code>y = -0.666846 × x + 666.738384</code></p>
 
     <form id="calc-form" novalidate>
-      <label for="xInput">Enter the first number (x)</label>
+      <label for="xInput">Enter the first number (Meters)</label>
       <div class="row">
         <input id="xInput" name="xInput" type="number" step="any" placeholder="e.g., 600" aria-describedby="hint" required>
         <button type="submit" id="computeBtn">Compute</button>
@@ -26,14 +26,14 @@
     <section class="result" aria-live="polite" aria-atomic="true">
       <h2>Result</h2>
       <div class="card">
-        <div class="line"><span class="label">y</span><span id="yOutput" class="value">—</span></div>
+        <div class="line"><span class="label">MIL</span><span id="yOutput" class="value">—</span></div>
         <div class="line"><span class="label">Formula</span><span class="value"><code>y = -0.666846 × x + 666.738384</code></span></div>
       </div>
     </section>
 
     <details class="details">
       <summary>About this calculator</summary>
-      <p>This tool computes the second number from the first using a near-perfect linear relationship derived from your data. If you need rounding or unit conversions, you can adjust those in the settings below.</p>
+      <p>This tool computes the second number from the first using a near-perfect linear relationship.</p>
       <form id="settingsForm" class="settings">
         <label class="inline">
           <input type="checkbox" id="roundToggle"> Round to nearest integer
@@ -44,7 +44,7 @@
       </form>
     </details>
 
-    <footer class="footer">Made for Ian • Linear fit parameters: m = -0.666846, b = 666.738384</footer>
+    <footer class="footer">Made for Mr. Fantastic • Linear fit parameters: m = -0.666846, b = 666.738384</footer>
   </main>
 
   <script src="script.js"></script>
