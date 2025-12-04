@@ -2,50 +2,55 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>X→Y Calculator</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <title>X→Y Calculator — Meters to MIL</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Fallback minimal styles if styles.css is not present */
+    .error { color: #b00020; }
+  </style>
 </head>
 <body>
-  <main class="container" role="main" aria-label="Meters to MIL calculator">
-    <h1>Compute <span class="mono">MIL</span> from <span class="mono">Meters</span></h1>
-    <p class="sub">Uses the linear fit: <code>y = -0.666846 × x + 666.738384</code></p>
+  <div class="container">
+    <h1>X→Y Calculator</h1>
+    <p class="sub">Compute MIL from meters using: <span class="mono">y = -0.666846 × x + 666.738384</span></p>
 
-    <form id="calc-form" novalidate>
+    <form id="calc-form" class="card" novalidate>
       <label for="xInput">Enter the first number (Meters)</label>
       <div class="row">
-        <input id="xInput" name="xInput" type="number" step="any" placeholder="e.g., 600" aria-describedby="hint" required>
-        <button type="submit" id="computeBtn">Compute</button>
+        <input id="xInput" name="meters" type="number" inputmode="decimal"
+               min="0" max="100000" step="0.001" required
+               placeholder="e.g., 123.456">
+        <button type="submit">Compute</button>
       </div>
-      <p id="hint" class="hint">We’ll apply the formula and show the result below.</p>
+      <div class="hint">Allowed range: 0 to 100,000 meters. Up to 3 decimals.</div>
+
+      <div class="settings">
+        <div class="inline">
+          <input id="roundToggle" type="checkbox" aria-describedby="roundHelp">
+          <label for="roundToggle">Round to nearest integer</label>
+        </div>
+        <div class="inline">
+          <label for="decimals">Decimal places</label>
+          <input id="decimals" name="decimals" type="number" min="0" max="10" step="1" value="2" required>
+        </div>
+      </div>
+
+      <p id="error" class="error" role="alert" aria-live="polite"></p>
+
+      <div class="result">
+        <h2>Result</h2>
+        <div class="card">
+          <div class="line"><span class="label">MIL</span><span id="yOutput" class="value">—</span></div>
+          <div class="details">
+            <div class="line"><span class="label">Formula</span><span class="value mono">y = -0.666846 × x + 666.738384</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">Made for Mr. Fantastic • Linear fit parameters: m = -0.666846, b = 666.738384</div>
     </form>
-
-    <section class="result" aria-live="polite" aria-atomic="true">
-      <h2>Result</h2>
-      <div class="card">
-        <div class="line"><span class="label">MIL</span><span id="yOutput" class="value">—</span></div>
-        <div class="line"><span class="label">Formula</span><span class="value"><code>y = -0.666846 × x + 666.738384</code></span></div>
-      </div>
-    </section>
-
-    <details class="details">
-      <summary>About this calculator</summary>
-      <p>This tool computes the second number from the first using a near-perfect linear relationship.</p>
-      <form id="settingsForm" class="settings">
-        <label class="inline">
-          <input type="checkbox" id="roundToggle"> Round to nearest integer
-        </label>
-        <label class="inline" for="decimals">Decimal places
-          <input type="number" id="decimals" min="0" max="10" step="1" value="3">
-        </label>
-      </form>
-    </details>
-
-    <footer class="footer">Made for Mr. Fantastic • Linear fit parameters: m = -0.666846, b = 666.738384</footer>
-  </main>
+  </div>
 
   <script src="script.js"></script>
 </body>
