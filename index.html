@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>X→Y Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="container" role="main" aria-label="X to Y calculator">
+    <h1>Compute <span class="mono">y</span> from <span class="mono">x</span></h1>
+    <p class="sub">Uses the linear fit: <code>y = -0.666846 × x + 666.738384</code></p>
+
+    <form id="calc-form" novalidate>
+      <label for="xInput">Enter the first number (x)</label>
+      <div class="row">
+        <input id="xInput" name="xInput" type="number" step="any" placeholder="e.g., 600" aria-describedby="hint" required>
+        <button type="submit" id="computeBtn">Compute</button>
+      </div>
+      <p id="hint" class="hint">We’ll apply the formula and show the result below.</p>
+    </form>
+
+    <section class="result" aria-live="polite" aria-atomic="true">
+      <h2>Result</h2>
+      <div class="card">
+        <div class="line"><span class="label">y</span><span id="yOutput" class="value">—</span></div>
+        <div class="line"><span class="label">Formula</span><span class="value"><code>y = -0.666846 × x + 666.738384</code></span></div>
+      </div>
+    </section>
+
+    <details class="details">
+      <summary>About this calculator</summary>
+      <p>This tool computes the second number from the first using a near-perfect linear relationship derived from your data. If you need rounding or unit conversions, you can adjust those in the settings below.</p>
+      <form id="settingsForm" class="settings">
+        <label class="inline">
+          <input type="checkbox" id="roundToggle"> Round to nearest integer
+        </label>
+        <label class="inline" for="decimals">Decimal places
+          <input type="number" id="decimals" min="0" max="10" step="1" value="3">
+        </label>
+      </form>
+    </details>
+
+    <footer class="footer">Made for Ian • Linear fit parameters: m = -0.666846, b = 666.738384</footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
