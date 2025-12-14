@@ -1,32 +1,134 @@
-
+/* WWII-themed HLL Artillery Calculator styles */
 :root {
-  --bg: #0f172a; /* slate-900 */
-  --card: #111827; /* gray-900 */
-  --text: #e5e7eb; /* gray-200 */
-  --muted: #94a3b8; /* slate-400 */
-  --accent: #22c55e; /* green-500 */
-  --accent-2: #f59e0b; /* amber-500 */
+  /* Palette */
+  --olive-drab: #6B8E23;   /* Olive Drab */
+  --khaki: #BDB76B;        /* Khaki */
+  --field-gray: #4B5320;   /* Field Gray */
+  --off-white: #ECE8D9;    /* Off-white */
+  --ink: #1c1c1c;          /* Dark text */
+  --warn: #b00020;         /* red */
+  /* Neutrals & accents */
+  --bg: #303521;           /* deep olive background */
+  --card: #3A3F24;         /* card base */
+  --border: #51562f;       /* border */
+  --focus: #ffdd77;        /* focus ring */
 }
+
 * { box-sizing: border-box; }
-body { margin: 0; font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); }
-.container { max-width: 720px; margin: 4rem auto; padding: 0 1rem; }
-h1 { font-size: 2rem; margin: 0 0 0.25rem; }
-.sub { color: var(--muted); margin: 0 0 1.25rem; }
-label { display: block; font-weight: 600; margin-bottom: 0.5rem; }
-.row { display: flex; gap: 0.75rem; align-items: center; }
-input[type=number] { flex: 1; padding: 0.7rem 0.8rem; border-radius: 0.5rem; border: 1px solid #334155; background: #0b1220; color: var(--text); }
-input::placeholder { color: #64748b; }
-button { padding: 0.7rem 1rem; border: none; border-radius: 0.5rem; background: var(--accent); color: #08210f; font-weight: 700; cursor: pointer; }
-button:hover { filter: brightness(1.1); }
-.hint { color: var(--muted); margin-top: 0.4rem; }
-.result h2 { margin-top: 2rem; }
-.card { background: var(--card); border: 1px solid #1f2937; border-radius: 0.75rem; padding: 1rem; }
-.line { display: flex; justify-content: space-between; align-items: baseline; padding: 0.35rem 0; }
-.label { color: var(--muted); }
-.value { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; color: var(--text); }
-.mono { font-family: ui-monospace, monospace; background: #0b1220; padding: 0 0.25rem; border-radius: 0.25rem; }
-.details { margin-top: 1rem; }
-.settings { display: flex; gap: 1rem; align-items: center; margin-top: 0.5rem; }
-.settings .inline { display: flex; gap: 0.5rem; align-items: center; }
-.footer { margin-top: 2rem; color: var(--muted); font-size: 0.9rem; }
-@media (max-width: 600px) { .row { flex-direction: column; align-items: stretch; } button { width: 100%; } }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: 'Special Elite', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  background: var(--bg);
+  color: var(--off-white);
+}
+.container { max-width: 760px; margin: 0 auto; padding: 24px; }
+
+.page-header { text-align: center; margin-bottom: 16px; }
+.title {
+  font-family: 'Stardos Stencil', 'Special Elite', system-ui, sans-serif;
+  letter-spacing: 1px;
+  font-size: 2rem;
+  margin: 8px 0 4px;
+}
+.sub { color: #d8d4c5; margin: 0 0 12px; }
+
+.insignia {
+  width: 72px; height: 6px; margin: 16px auto 8px; background: linear-gradient(90deg, var(--khaki), var(--olive-drab), var(--khaki));
+  border-radius: 2px;
+}
+
+/* Subtle paper/canvas texture using layered gradients */
+.arty-card {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+  overflow: hidden;
+}
+.arty-card::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(rgba(0,0,0,0.08), rgba(0,0,0,0.04));
+  background-size: 3px 3px, 100% 100%;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+.card-top { display: flex; align-items: center; justify-content: space-between; }
+
+.row { display: flex; gap: 12px; align-items: center; margin: 12px 0; flex-wrap: wrap; }
+.meters-row { align-items: center; }
+
+label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; }
+select, input[type=number] {
+  appearance: none;
+  background: #2f331e;
+  color: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  min-width: 240px;
+}
+
+/* Hide native number spinners */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+input[type=number] { -moz-appearance: textfield; }
+
+.help { color: #d1cdbd; }
+
+/* Reset button (ghost style) */
+.ghost {
+  background: transparent;
+  color: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.ghost:hover { background: rgba(189,183,107,0.14); }
+
+/* Large +/- buttons for meters */
+.meters-input { display: flex; gap: 10px; align-items: center; }
+.round {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--olive-drab);
+  color: var(--off-white);
+  border: 1px solid var(--border);
+  font-size: 28px; line-height: 0; font-weight: 700;
+  cursor: pointer;
+}
+.round:hover { filter: brightness(1.05); }
+.round:active { transform: translateY(1px); }
+
+/* Prominent result */
+.result {
+  margin-top: 8px; font-weight: 800;
+  font-family: 'Stardos Stencil', 'Special Elite', system-ui, sans-serif;
+  font-size: clamp(48px, 8vw, 96px);
+}
+.result.extrapolated { color: var(--warn); }
+.warning { margin-top: 6px; color: var(--warn); font-size: 0.95rem; }
+
+/* Precision toggle (smaller & de-emphasized below output) */
+.precision-row { margin-top: 6px; display: flex; align-items: center; }
+.precision-label {
+  font-size: 0.9rem; color: #d1cdbd;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.precision-label input { transform: scale(0.9); }
+
+.notes { margin-top: 18px; }
+.footer { margin-top: 24px; color: #d1cdbd; text-align: center; }
+
+/* Accessibility: focus ring and hit areas */
+button, select, input { outline: none; }
+button:focus, select:focus, input:focus {
+  box-shadow: 0 0 0 3px var(--focus);
+}
+button, .round { min-width: 44px; min-height: 44px; }

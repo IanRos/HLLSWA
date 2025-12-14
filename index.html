@@ -1,57 +1,100 @@
+
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>X→Y Calculator — Meters to MIL</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="styles.css">
-  <style>
-    /* Fallback minimal styles if styles.css is not present */
-    .error { color: #b00020; }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HLL Artillery Calculator</title>
+
+  <!-- WWII-themed typefaces (readable, with system fallbacks). -->
+  <link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&family=Special+Elite&display=swap" rel="stylesheet">
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>X→Y Calculator</h1>
-    <p class="sub">Compute MIL from meters using: <span class="mono">y = -0.666846 × x + 666.738384</span></p>
+  <main class="container">
+    <header class="page-header">
+      <div class="insignia" aria-hidden="true"></div>
+      <h1 class="title">HLL Artillery Calculator</h1>
+      <p class="sub">Meters → MIL converter for SPA &amp; FA.</p>
+      <!-- h3 class="sub">Enter Meters, get MIL</h3-->
+    </header>
 
-    <form id="calc-form" class="card" novalidate>
-      <label for="xInput">Enter the first number (Meters)</label>
+    <section class="arty-card" aria-labelledby="calc-title">
+      <div class="card-top">
+        <h2 id="calc-title">Enter Meters, get MIL</h2>
+        <button id="resetBtn" class="ghost" aria-label="Reset calculator">Reset</button>
+      </div>
+
+      <!-- Step 1: Category -->
       <div class="row">
-        <input id="xInput" name="meters" type="number" inputmode="decimal"
-               min="0" max="100000" step="0.001" required
-               placeholder="e.g., 123.456">
-        <button type="submit">Compute</button>
-      </div>
-      <div class="hint">Allowed range: 0 to 100,000 meters. Up to 3 decimals.</div>
-
-      <div class="settings">
-        <div class="inline">
-          <input id="roundToggle" type="checkbox" aria-describedby="roundHelp">
-          <label for="roundToggle">Round to nearest integer</label>
-        </div>
-        <div class="inline">
-          <label for="decimals">Decimal places</label>
-          <input id="decimals" name="decimals" type="number" min="0" max="10" step="1" value="2" required>
-        </div>
+        <label for="step1">Artillery Category</label>
+        <select id="step1" aria-label="Artillery category">
+          <option value="" selected>— Select —</option>
+          <option value="SPA">Self Propelled Artillery (SPA)</option>
+          <option value="FA">Fixed Artillery (FA)</option>
+        </select>
       </div>
 
-      <p id="error" class="error" role="alert" aria-live="polite"></p>
-
-      <div class="result">
-        <h2>Result</h2>
-        <div class="card">
-          <div class="line"><span class="label">MIL</span><span id="yOutput" class="value">—</span></div>
-          <div class="details">
-            <div class="line"><span class="label">Formula</span><span class="value mono">y = -0.666846 × x + 666.738384</span></div>
-          </div>
-        </div>
+      <!-- Step 2: Variant/Faction -->
+      <div class="row">
+        <label for="step2">Faction</label>
+        <select id="step2" aria-label="Artillery variant" disabled>
+          <option value="">— Select Step 1 first —</option>
+        </select>
       </div>
 
-      <div class="footer">Made for Mr. Fantastic • Linear fit parameters: m = -0.666846, b = 666.738384</div>
-    </form>
-  </div>
+      <!-- Meters input with large +/- controls -->
+      <div class="row meters-row">
+        <label for="meters">Meters</label>
+        <div class="meters-input">
+          <button id="minusBtn" class="round" aria-label="Decrease meters">−</button>
+          <input id="meters" type="number" inputmode="numeric" step="1" min="0" placeholder="Enter whole meters…" aria-describedby="metersHelp" />
+          <button id="plusBtn" class="round" aria-label="Increase meters">+</button>
+        </div>
+        <small id="metersHelp" class="help">Whole numbers only. Use +/− or ↑/↓ keys.</small>
+      </div>
 
+      <!-- SPA-only MIL adjustment with large +/- controls -->
+      <div class="row" id="spaAdjRow" hidden>
+        <label for="spaAdj">MIL adjustment (SPA only)</label>
+        <div class="meters-input">
+          <button id="adjMinusBtn" class="round" aria-label="Decrease MIL adjustment">−</button>
+          <input id="spaAdj" type="number" step="1" min="-1000" max="1000" value="0" aria-describedby="adjHelp" />
+          <button id="adjPlusBtn" class="round" aria-label="Increase MIL adjustment">+</button>
+        </div>
+        <small id="adjHelp" class="help">Applied after computation.</small>
+      </div>
+
+      <!-- Prominent output -->
+      <div id="result" class="result" role="status" aria-live="polite" aria-atomic="true">MIL: —</div>
+      <div id="warning" class="warning" hidden></div>
+
+      <!-- Precision toggle (de-emphasized, below output) -->
+      <div class="precision-row">
+        <label for="wholeToggle" class="precision-label" title="Show one decimal place by default; toggle to whole number">
+          <input id="wholeToggle" type="checkbox" />
+          Whole number output
+        </label>
+      </div>
+    </section>
+
+    <section class="notes">
+      <h2>Notes</h2>
+      <ul>
+        <li><code>(1000 − meters)</code> — SPA formulas use fractions of this; FA formulas are exact linear fits.</li>
+        <li>Output shows one decimal by default. Toggle above to use whole numbers.</li>
+        <li>Extrapolation is allowed; output turns red and shows the relevant reference range.</li>
+      </ul>
+    </section>
+
+    <footer class="footer">
+      <small>Created by Mr. Fantastic &amp; M365 Copilot • © 2025</small>
+    </footer>
+  </main>
+
+  <!-- App logic -->
   <script src="script.js"></script>
 </body>
 </html>
