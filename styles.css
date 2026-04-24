@@ -1,44 +1,82 @@
 /* WWII-themed HLL Artillery Calculator styles */
+
 :root {
   /* Palette */
-  --olive-drab: #6B8E23;   /* Olive Drab */
-  --khaki: #BDB76B;        /* Khaki */
-  --field-gray: #4B5320;   /* Field Gray */
-  --off-white: #ECE8D9;    /* Off-white */
-  --ink: #1c1c1c;          /* Dark text */
-  --warn: #b00020;         /* red */
+  --olive-drab: #6B8E23;
+  --khaki: #BDB76B;
+  --field-gray: #4B5320;
+  --off-white: #ECE8D9;
+  --ink: #1c1c1c;
+  --warn: #b00020;
+
   /* Neutrals & accents */
-  --bg: #303521;           /* deep olive background */
-  --card: #3A3F24;         /* card base */
-  --border: #51562f;       /* border */
-  --focus: #ffdd77;        /* focus ring */
+  --bg: #303521;
+  --card: #3A3F24;
+  --border: #51562f;
+  --focus: #ffdd77;
 }
 
-* { box-sizing: border-box; }
-html, body { height: 100%; }
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
 body {
   margin: 0;
-  font-family: 'Special Elite', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: 'Special Elite', system-ui, -apple-system, Segoe UI,
+               Roboto, Helvetica, Arial, "Apple Color Emoji",
+               "Segoe UI Emoji";
   background: var(--bg);
   color: var(--off-white);
 }
-.container { max-width: 760px; margin: 0 auto; padding: 24px; }
 
-.page-header { text-align: center; margin-bottom: 16px; }
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* =========================
+   HEADER
+   ========================= */
+
+.page-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
 .title {
   font-family: 'Stardos Stencil', 'Special Elite', system-ui, sans-serif;
   letter-spacing: 1px;
   font-size: 2rem;
   margin: 8px 0 4px;
 }
-.sub { color: #d8d4c5; margin: 0 0 12px; }
+
+.sub {
+  color: #d8d4c5;
+  margin: 0 0 12px;
+}
 
 .insignia {
-  width: 72px; height: 6px; margin: 16px auto 8px; background: linear-gradient(90deg, var(--khaki), var(--olive-drab), var(--khaki));
+  width: 72px;
+  height: 6px;
+  margin: 16px auto 8px;
+  background: linear-gradient(
+    90deg,
+    var(--khaki),
+    var(--olive-drab),
+    var(--khaki)
+  );
   border-radius: 2px;
 }
 
-/* Subtle paper/canvas texture using layered gradients */
+/* =========================
+   CARD
+   ========================= */
+
 .arty-card {
   position: relative;
   background: var(--card);
@@ -48,9 +86,11 @@ body {
   box-shadow: 0 2px 8px rgba(0,0,0,0.35);
   overflow: hidden;
 }
+
 .arty-card::before {
   content: "";
-  position: absolute; inset: 0;
+  position: absolute;
+  inset: 0;
   background-image:
     radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
     linear-gradient(rgba(0,0,0,0.08), rgba(0,0,0,0.04));
@@ -59,13 +99,37 @@ body {
   pointer-events: none;
 }
 
-.card-top { display: flex; align-items: center; justify-content: space-between; }
+.card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-.row { display: flex; gap: 12px; align-items: center; margin: 12px 0; flex-wrap: wrap; }
-.meters-row { align-items: center; }
+/* =========================
+   ROWS & LABELS
+   ========================= */
 
-label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; }
-select, input[type=number] {
+.row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 12px 0;
+  flex-wrap: wrap;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 600;
+}
+
+/* =========================
+   INPUTS & SELECTS
+   ========================= */
+
+select,
+input[type=number] {
   appearance: none;
   background: #2f331e;
   color: var(--off-white);
@@ -75,14 +139,24 @@ select, input[type=number] {
   min-width: 240px;
 }
 
-/* Hide native number spinners */
+/* Hide native spinners */
 input[type=number]::-webkit-outer-spin-button,
-input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-input[type=number] { -moz-appearance: textfield; }
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
 
-.help { color: #d1cdbd; }
+.help {
+  color: #d1cdbd;
+}
 
-/* Reset button (ghost style) */
+/* =========================
+   BUTTONS
+   ========================= */
+
 .ghost {
   background: transparent;
   color: var(--off-white);
@@ -91,44 +165,138 @@ input[type=number] { -moz-appearance: textfield; }
   padding: 8px 12px;
   cursor: pointer;
 }
-.ghost:hover { background: rgba(189,183,107,0.14); }
 
-/* Large +/- buttons for meters */
-.meters-input { display: flex; gap: 10px; align-items: center; }
+.ghost:hover {
+  background: rgba(189,183,107,0.14);
+}
+
+/* Generic round button */
 .round {
-  width: 44px; height: 44px; border-radius: 50%;
   background: var(--olive-drab);
   color: var(--off-white);
   border: 1px solid var(--border);
-  font-size: 28px; line-height: 0; font-weight: 700;
+  border-radius: 50%;
+  font-weight: 700;
   cursor: pointer;
 }
-.round:hover { filter: brightness(1.05); }
-.round:active { transform: translateY(1px); }
 
-/* Prominent result */
+.round:hover {
+  filter: brightness(1.05);
+}
+
+.round:active {
+  transform: translateY(1px);
+}
+
+/* =========================
+   METERS & ADJUSTMENT INPUT GROUP
+   ========================= */
+
+.meters-input {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Larger buttons so +10 / -10 fit cleanly */
+.meters-input-large .round {
+  width: 64px;
+  height: 56px;
+  font-size: 20px;
+  line-height: 1;
+}
+
+/* =========================
+   METERS PROMINENCE
+   ========================= */
+
+.meters-row-large {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.meters-row-large label {
+  font-size: 1.2rem;
+}
+
+.meters-row-large input {
+  height: 56px;
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+/* =========================
+   RESULT
+   ========================= */
+
 .result {
-  margin-top: 8px; font-weight: 800;
+  margin-top: 8px;
+  font-weight: 800;
   font-family: 'Stardos Stencil', 'Special Elite', system-ui, sans-serif;
   font-size: clamp(48px, 8vw, 96px);
 }
-.result.extrapolated { color: var(--warn); }
-.warning { margin-top: 6px; color: var(--warn); font-size: 0.95rem; }
 
-/* Precision toggle (smaller & de-emphasized below output) */
-.precision-row { margin-top: 6px; display: flex; align-items: center; }
-.precision-label {
-  font-size: 0.9rem; color: #d1cdbd;
-  display: inline-flex; align-items: center; gap: 8px;
+.result.extrapolated {
+  color: var(--warn);
 }
-.precision-label input { transform: scale(0.9); }
 
-.notes { margin-top: 18px; }
-.footer { margin-top: 24px; color: #d1cdbd; text-align: center; }
+.warning {
+  margin-top: 6px;
+  color: var(--warn);
+  font-size: 0.95rem;
+}
 
-/* Accessibility: focus ring and hit areas */
-button, select, input { outline: none; }
-button:focus, select:focus, input:focus {
+/* =========================
+   PRECISION TOGGLE
+   ========================= */
+
+.precision-row {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+}
+
+.precision-row label {
+  font-size: 0.9rem;
+  color: #d1cdbd;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.precision-row input {
+  transform: scale(0.9);
+}
+
+/* =========================
+   FOOTER
+   ========================= */
+
+.footer {
+  margin-top: 24px;
+  color: #d1cdbd;
+  text-align: center;
+}
+
+/* =========================
+   ACCESSIBILITY
+   ========================= */
+
+button,
+select,
+input {
+  outline: none;
+}
+
+button:focus,
+select:focus,
+input:focus {
   box-shadow: 0 0 0 3px var(--focus);
 }
-button, .round { min-width: 44px; min-height: 44px; }
+
+/* Ensure minimum touch target size */
+button,
+.round {
+  min-width: 44px;
+  min-height: 44px;
+}
