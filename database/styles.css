@@ -1,0 +1,94 @@
+
+/*
+  GTA Hub — Neon Dark Theme (Desktop-first)
+  Author: MisterFantastick (via Copilot)
+*/
+:root {
+  --bg: #0b0f14;
+  --bg-2: #0e141c;
+  --text: #d7e1ec;
+  --muted: #9ab0c5;
+  --border: #1b2330;
+  --accent-1: #34d1ff; /* neon cyan */
+  --accent-2: #ff2d95; /* neon magenta */
+  --accent-3: #b3ff00; /* neon lime */
+  --glow: 0 0 0.5rem rgba(52,209,255,0.35), 0 0 1.25rem rgba(255,45,149,0.2);
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+html { background: var(--bg); }
+body {
+  margin: 0;
+  color: var(--text);
+  font-family: Inter, Segoe UI, Roboto, Helvetica, Arial, system-ui, -apple-system, sans-serif;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(52,209,255,0.12), transparent 70%),
+    radial-gradient(1000px 600px at 90% 0%, rgba(255,45,149,0.10), transparent 70%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+}
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+/**** HERO ****/
+.hero { position: relative; padding: 54px 0 0; overflow: hidden; }
+.hero__overlay {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.06),
+      rgba(255,255,255,0.06) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  mix-blend-mode: overlay; opacity: 0.12;
+}
+.logo {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 56px; letter-spacing: 2px;
+  color: white; text-shadow: 0 2px 0 #000, 0 0 16px rgba(52,209,255,0.5);
+}
+.logo span { color: var(--accent-1); }
+.tag { margin-top: 6px; color: var(--muted); }
+.skyline { display: block; width: 100%; height: 140px; }
+
+/**** INTRO ****/
+.intro { margin: 26px 0 14px; line-height: 1.6; color: var(--muted); }
+.intro .note {
+  margin-top: 10px; border: 1px solid var(--border); border-left: 4px solid var(--accent-1);
+  padding: 10px 12px; background: rgba(20,26,36,0.8); border-radius: 8px;
+}
+.intro code { color: #e6f3ff; background: rgba(52,209,255,0.12); padding: 1px 6px; border-radius: 4px; }
+
+/**** LINKS GRID ****/
+.links-grid {
+  display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  margin: 18px 0 48px;
+}
+.link-card {
+  display: block; position: relative; padding: 16px 16px 14px; background: rgba(16,22,32,0.9);
+  border: 1px solid var(--border); border-radius: 14px; text-decoration: none; color: var(--text);
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+.link-card::before {
+  content: ""; position: absolute; inset: -1px; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(135deg, rgba(52,209,255,0.15), rgba(255,45,149,0.12));
+  filter: blur(14px); opacity: 0; transition: opacity 160ms ease;
+}
+.link-card:hover { transform: translateY(-3px); border-color: #263146; box-shadow: var(--glow); }
+.link-card:hover::before { opacity: 1; }
+
+.link-card__title { font-weight: 800; font-size: 18px; margin-bottom: 6px; color: #f1f7ff; }
+.link-card__desc { font-size: 14px; color: var(--muted); margin-bottom: 10px; }
+.link-card__meta { font-size: 12px; color: #9ad8ff; opacity: 0.85; }
+
+/**** FOOTER ****/
+.footer { display: flex; justify-content: space-between; align-items: center; padding-bottom: 36px; color: var(--muted); }
+.footer strong { color: #e6f3ff; }
+
+/* Desktop-first; minimal mobile tweaks just in case */
+@media (max-width: 720px) {
+  .logo { font-size: 40px; }
+  .skyline { height: 96px; }
+}
